@@ -1,0 +1,22 @@
+# Meta-config: defines what algos, what envs, and overrides
+algorithms:
+  - dqn
+  - sarsa
+  # Add more algorithms as needed
+
+environments:
+  - CartPole-v1
+  - MountainCar-v0
+  # Add more environments as needed
+
+# Global overrides
+global:
+  seed: 42
+  max_episodes: 1000
+  log_interval: 10
+  
+# Experiment settings
+experiment:
+  num_runs: 5
+  save_checkpoints: true
+  save_figures: true 

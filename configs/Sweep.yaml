@@ -1,0 +1,12 @@
+# Sweep Configuration for Multiple Combinations
+sweep:
+  method: grid
+  parameters:
+    algorithm:
+      values: [dqn, sarsa]
+    environment:
+      values: [CartPole-v1, MountainCar-v0]
+    learning_rate:
+      values: [0.001, 0.01, 0.1]
+    epsilon_decay:
+      values: [0.99, 0.995, 0.999] 

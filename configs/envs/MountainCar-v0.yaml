@@ -1,0 +1,4 @@
+# MountainCar-v0 Environment Configuration
+env_name: MountainCar-v0
+max_steps: 200
+reward_threshold: -110 
