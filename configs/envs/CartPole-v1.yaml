@@ -2,3 +2,13 @@
 env_name: CartPole-v1
 max_steps: 500
 reward_threshold: 475 
+
+observation_space:
+  type: "Box"
+  shape: [4]
+  low: [-4.8, -4, -0.418, -4]
+  high: [4.8, 4, 0.418, 4]
+
+action_space:
+  type: "Discrete"
+  n: 2
