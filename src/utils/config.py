@@ -27,15 +27,13 @@ class ConfigManager:
         if load_defaults == True:
             self.defaults = self._load_yaml_file("defaults.yaml")
         else:
-            self.defualts = {}
+            self.defaults = {}
 
     def get_full_config(self, algo_name, env_name):
         """Get complete config by merging defaults, algo, and env configs"""
-        algo_path = self._get_file_path(self.algo_path, algo_name)
-        env_path = self._get_file_path(self.envs_path, env_name)
 
-        algo_config = self._load_yaml_file(algo_path)
-        env_config = self._load_yaml_file(env_path)
+        algo_config = self._load_yaml_file(f"{algo_name}.yaml")
+        env_config = self._load_yaml_file(f"{env_name}.yaml")
 
         merged = self.defaults.copy()
 
@@ -95,6 +93,11 @@ class ConfigManager:
     def _load_yaml_file(self, filename):
         """Load a YAML file from the config directory"""
         
+        try:
+            return self.get_config_from_cache(filename)
+        except KeyError:
+            pass
+
         path = self._get_file_path(self.base_config_path, filename)
         
         with open(path, 'r') as f:
@@ -107,9 +110,6 @@ class ConfigManager:
         if not isinstance(data, dict):
             raise ValueError(f"YAML file must contain a dictionary: {path}")
         
-        # Check for required keys, etc.
-        if 'required_key' not in data:
-            raise ValueError(f"Missing required key 'required_key' in {path}")
 
         self.add_config_to_cache(filename, data)
         return data
