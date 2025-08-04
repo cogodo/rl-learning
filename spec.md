@@ -3,16 +3,6 @@
 
 ### **Phase 1: Core Infrastructure (Start Here)**
 
-#### **1. Configuration System**
-```python
-# src/utils/config.py
-class ConfigManager:
-    def load_config(self, config_path)
-    def merge_configs(self, base_config, override_config)
-    def validate_config(self, config)
-    def get_algorithm_config(self, algo_name)
-    def get_environment_config(self, env_name)
-```
 
 #### **2. Environment Management**
 ```python
