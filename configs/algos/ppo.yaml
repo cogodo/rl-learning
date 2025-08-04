@@ -1,22 +1,23 @@
 #PPO Algorithm Hyperparameters
-horizon: 2048
-adam_stepsize: 3e-4
-num_epochs: 10
-minibatch_size: 64
-gamma: .99
-clip_ratio: 0.2
-value_loss_coef: 0.5
-entropy_coef: 0.01
-max_grad_norm: 0.5
-lam: 0.95
+algorithm:
+  horizon: 2048
+  adam_stepsize: 3e-4
+  num_epochs: 10
+  minibatch_size: 64
+  gamma: .99
+  clip_ratio: 0.2
+  value_loss_coef: 0.5
+  entropy_coef: 0.01
+  max_grad_norm: 0.5
+  lam: 0.95
 
-#architecture
-hidden_size: 64
-num_layers: 2
+  #architecture
+  hidden_size: 64
+  num_layers: 2
 
-#training stability
-normalize_advantages: true
-normalize_observations: true
+  #training stability
+  normalize_advantages: true
+  normalize_observations: true
 
-anneal_lr: true
-target_kl: 0.01
+  anneal_lr: true
+  target_kl: 0.01

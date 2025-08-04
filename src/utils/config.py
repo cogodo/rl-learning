@@ -29,60 +29,91 @@ class ConfigManager:
         else:
             self.defualts = {}
 
-    def load_config(self, config_path):
-        return NotImplementedError
-
-    def merge_configs(self, base_config, override_config):
-        return NotImplementedError
-
-    def validate_config(self, config):
-        return NotImplementedError
-
-    def get_algorithm_config(self, algo_name):
-        return NotImplementedError
-
-    def get_environment_config(self, env_name):
-        return NotImplementedError
-
     def get_full_config(self, algo_name, env_name):
         """Get complete config by merging defaults, algo, and env configs"""
-        return NotImplementedError
+        algo_path = self._get_file_path(self.algo_path, algo_name)
+        env_path = self._get_file_path(self.envs_path, env_name)
+
+        algo_config = self._load_yaml_file(algo_path)
+        env_config = self._load_yaml_file(env_path)
+
+        merged = self.defaults.copy()
+
+        if "algorithm" not in merged:
+            merged['algorithm'] = {}
+        merged['algorithm'].update(algo_config)
+
+        if "environment" not in merged:
+            merged["environment"] = {}
+        merged["environment"].update(env_config)
+
+        return merged
 
     def save_config(self, config, filepath):
         """Save a config to a YAML file"""
-        return NotImplementedError
+        with open(filepath, 'w') as f:
+            yaml.safe_dump(config, f)
 
     def list_available_algorithms(self):
         """Return list of available algorithm config files"""
-        return NotImplementedError
+        files = os.listdir(self.algo_path)
+
+        yaml_files = [f for f in files if f.endswith((".yaml", ".yml"))]
+        return yaml_files
 
     def list_available_environments(self):
         """Return list of available environment config files"""
-        return NotImplementedError
+        files = os.listdir(self.envs_path)
+
+        yaml_files = [f for f in files if f.endswith((".yaml", ".yml"))]
+        return yaml_files
 
     def reload_configs(self):
         """Clear cache and reload all configs"""
-        return NotImplementedError
+        self.clear_cache()
+
+        if hasattr(self, 'defaults'):
+            self.defaults = self._load_yaml_file("defaults.yaml")
 
     def get_config_from_cache(self, key):
         """Get config from cache if available"""
-        return NotImplementedError
+        if key in self._config_cache:
+            return self._config_cache[key]
+        else:
+            raise KeyError(f"Key not found in cache: {key}")
+            
+        
 
     def add_config_to_cache(self, key, config):
         """Add config to cache"""
-        return NotImplementedError
+        self._config_cache[key] = config
 
     def clear_cache(self):
         """Clear the config cache"""
-        return NotImplementedError
+        self._config_cache.clear()
 
     def _load_yaml_file(self, filename):
         """Load a YAML file from the config directory"""
-        return NotImplementedError
+        
+        path = self._get_file_path(self.base_config_path, filename)
+        
+        with open(path, 'r') as f:
+            data = yaml.safe_load(f)
+        
+            # Validate directly here (not calling separate method)
+        if data is None:
+            raise ValueError(f"Empty or invalid YAML file: {path}")
+        
+        if not isinstance(data, dict):
+            raise ValueError(f"YAML file must contain a dictionary: {path}")
+        
+        # Check for required keys, etc.
+        if 'required_key' not in data:
+            raise ValueError(f"Missing required key 'required_key' in {path}")
 
-    def _validate_yaml_syntax(self, filepath):
-        """Validate that a YAML file has correct syntax"""
-        return NotImplementedError
+        self.add_config_to_cache(filename, data)
+        return data
+
 
     def _deep_merge_dicts(self, base_dict, override_dict):
         """Recursively merge two dictionaries"""
@@ -100,8 +131,8 @@ class ConfigManager:
 
     def _get_file_path(self, directory, filename):
         """Construct full file path from directory and filename"""
-        return NotImplementedError
+        return os.path.join(directory, filename)
 
     def _is_config_file(self, filename):
         """Check if filename is a valid config file"""
-        return NotImplementedError 
+        return filename.endswith(('.yaml', '.yml')) 
