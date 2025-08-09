@@ -3,34 +3,6 @@
 
 ### **Phase 1: Core Infrastructure (Start Here)**
 
-
-#### **2. Environment Management**
-```python
-# src/env_wrappers/base.py
-class BaseWrapper:
-    def __init__(self, env, config)
-    def reset(self)
-    def step(self, action)
-    def close(self)
-
-# src/env_wrappers/normalize.py
-class NormalizeObservations(BaseWrapper):
-    def _normalize_obs(self, obs)
-
-# src/env_wrappers/normalize_rewards.py
-class NormalizeRewards(BaseWrapper):
-    def _normalize_reward(self, reward)
-
-# src/env_wrappers/frame_stack.py
-class FrameStack(BaseWrapper):
-    def _get_stacked_obs(self)
-
-# src/env_wrappers/env_factory.py
-class EnvironmentFactory:
-    def create_env(self, env_name, config)
-    def apply_wrappers(self, env, wrapper_config)
-```
-
 #### **3. Logging and Metrics**
 ```python
 # src/utils/logging.py
