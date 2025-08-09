@@ -12,9 +12,9 @@ class NormalizeRewards(BaseWrapper):
         self.epsilon = 1e-8
         self.training = True
 
-    def step(self, action):
+    def step(self, action, **kwargs):
         """Take a step and normalize rewards"""
-        obs, reward, done, truncated, info = self.env.step(action)
+        obs, reward, done, truncated, info = self.env.step(action, **kwargs)
         if self.training:
             self._update_stats(reward)
         normalized_reward = self._normalize(reward)

@@ -22,8 +22,8 @@ class NormalizeObservations(BaseWrapper):
             dtype=original_space.dtype
         )
 
-    def step(self, action):
-        obs, reward, done, truncated, info = self.env.step(action)
+    def step(self, action, **kwargs):
+        obs, reward, done, truncated, info = self.env.step(action, **kwargs)
         if self.training:
             self._update_stats(obs)
         normalized_obs = self._normalize(obs)
