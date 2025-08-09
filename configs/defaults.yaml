@@ -65,10 +65,13 @@ environment:
 
   #wrapper config defaults
   wrappers:
-    normalize_observations: false
-    normalize_rewards: false
-    clip_actions: false
-    frame_stack: 1
+    normalize_observations:
+      enabled: false
+    normalize_rewards: 
+      enabled: false
+    frame_stack:
+      enabled: false
+      frame_stack: 1
   
   #eval defaults
   eval_episodes: 10

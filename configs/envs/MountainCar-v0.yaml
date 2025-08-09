@@ -2,3 +2,12 @@
 env_name: MountainCar-v0
 max_steps: 200
 reward_threshold: -110 
+
+wrappers:
+  frame_stack:
+    enabled: false
+    frame_stack: 1
+  normalize_observations:
+    enabled: false
+  normalize_rewards:
+    enabled: false
