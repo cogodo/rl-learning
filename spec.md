@@ -1,39 +1,7 @@
 
 ## **Complete RL Framework Implementation Spec**
 
-### **Phase 1: Core Infrastructure (Start Here)**
-
-#### **3. Logging and Metrics**
-```python
-# src/utils/logging.py
-class Logger:
-    def log_episode(self, episode, reward, length, loss)
-    def log_step(self, step, obs, action, reward, done)
-    def save_logs(self, path)
-
-# src/utils/metrics.py
-class MetricsTracker:
-    def update(self, episode_reward, episode_length, loss)
-    def get_episode_stats(self)
-    def get_training_stats(self)
-    def reset(self)
-```
-
 ### **Phase 2: Data Structures**
-
-#### **4. Experience Buffer**
-```python
-# src/utils/buffer.py
-class ReplayBuffer:
-    def add(self, obs, action, reward, next_obs, done)
-    def sample(self, batch_size)
-    def __len__(self)
-
-class EpisodeBuffer:
-    def add_step(self, obs, action, reward, done)
-    def get_episode(self)
-    def clear(self)
-```
 
 #### **5. Network Architectures**
 ```python
