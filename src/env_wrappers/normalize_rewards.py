@@ -1,4 +1,4 @@
-from base import BaseWrapper
+from .base import BaseWrapper
 import numpy as np
 from math import sqrt
 
@@ -14,11 +14,11 @@ class NormalizeRewards(BaseWrapper):
 
     def step(self, action, **kwargs):
         """Take a step and normalize rewards"""
-        obs, reward, done, truncated, info = self.env.step(action, **kwargs)
+        obs, reward, terminated, truncated, info = self.env.step(action, **kwargs)
         if self.training:
             self._update_stats(reward)
-        normalized_reward = self._normalize(reward)
-        return obs, normalized_reward, done, truncated, info
+        normalized_reward = self._normalize_reward(reward)
+        return obs, normalized_reward, terminated, truncated, info
     
     def _update_stats(self, reward):
         """Update running statistics for reward normalization."""

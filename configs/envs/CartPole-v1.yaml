@@ -14,12 +14,23 @@ environment:
     type: "Discrete"
     n: 2
 
-
   wrappers:
-  frame_stack:
-    enabled: false
-    frame_stack: 1
-  normalize_observations:
-    enabled: false
-  normalize_rewards:
-    enabled: false
+    frame_stack:
+      enabled: false
+      frame_stack: 1
+    normalize_observations:
+      enabled: false
+    normalize_rewards:
+      enabled: false
+
+# Agent overrides for CartPole-v1
+agent:
+  dqn:
+    training:
+      batch_size: 64  # Larger batch for stable CartPole training
+      epsilon: 0.05   # Lower epsilon for CartPole (easier environment)
+  
+  ppo:
+    training:
+      batch_size: 128  # Larger batches work well for CartPole
+      clip_ratio: 0.1  # Tighter clipping for stable policy

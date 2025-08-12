@@ -29,24 +29,21 @@ class ConfigManager:
         else:
             self.defaults = {}
 
-    def get_full_config(self, algo_name, env_name):
+    def get_full_config(self, algo_name, env_name, cli_overrides=None):
         """Get complete config by merging defaults, algo, and env configs"""
+        defaults = getattr(self, "defaults", {}) or {}
 
         algo_config = self._load_yaml_file(f"{algo_name}.yaml")
         env_config = self._load_yaml_file(f"{env_name}.yaml")
 
-        merged = self.defaults.copy()
+        merged = self._deep_merge_dicts(defaults, algo_config)
+        merged = self._deep_merge_dicts(merged, env_config)
 
-        if "algorithm" not in merged:
-            merged['algorithm'] = {}
-        merged['algorithm'].update(algo_config)
-
-        if "environment" not in merged:
-            merged["environment"] = {}
-        merged["environment"].update(env_config)
+        if cli_overrides and isinstance(cli_overrides, dict):
+            merged = self._deep_merge_dicts(merged, cli_overrides)
 
         return merged
-
+    
     def save_config(self, config, filepath):
         """Save a config to a YAML file"""
         with open(filepath, 'w') as f:

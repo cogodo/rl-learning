@@ -1,4 +1,4 @@
-from base import BaseWrapper
+from .base import BaseWrapper
 import numpy as np
 from collections import deque
 from gymnasium.spaces import Box
@@ -24,9 +24,10 @@ class FrameStack(BaseWrapper):
 
         original_low = self.env.observation_space.low
         original_high = self.env.observation_space.high
-        new_low = np.tile(original_low, (self.num_frames, 1))
-        new_high = np.tile(original_high, (self.num_frames, 1))
 
+
+        new_low = np.broadcast_to(original_low, new_shape)
+        new_high = np.broadcast_to(original_high, new_shape)
         new_dtype = self.env.observation_space.dtype
 
         return Box(
@@ -46,11 +47,11 @@ class FrameStack(BaseWrapper):
     
     def step(self, action, **kwargs):
         """Take step and update frame stack."""
-        obs, reward, done, truncated, info = self.env.step(action, **kwargs)
+        obs, reward, terminated, truncated, info = self.env.step(action, **kwargs)
 
         self._update_frames(obs)
         
-        return self._get_stacked_obs(), reward, done, truncated, info
+        return self._get_stacked_obs(), reward, terminated, truncated, info
     
     def _get_stacked_obs(self):
         """Get current stacked observation from frame buffer."""

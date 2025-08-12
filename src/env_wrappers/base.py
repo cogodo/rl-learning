@@ -12,9 +12,9 @@ class BaseWrapper:
         """Take a step in the environment with the given action."""
         return self.env.step(action, **kwargs)
     
-    def render(self, mode="human", **kwargs):
+    def render(self, **kwargs):
         """Render the environment state."""
-        return self.env.render(mode, **kwargs)
+        return self.env.render(**kwargs)
     
     def close(self):
         """Close the environment and free resources."""
@@ -22,7 +22,20 @@ class BaseWrapper:
     
     def seed(self, seed=None):
         """Set the random seed for reproducible behavior."""
-        return self.env.seed(seed)
+        if seed is None:
+            return
+        
+        if hasattr(self.env, "action_space") and hasattr(self.env.action_space, "seed"):
+            self.env.action_space.seed(seed)
+        if hasattr(self.env, "observation_space") and hasattr(self.env.observation_space, "seed"):
+            try:
+                self.env.observation_space.seed(seed)
+            except Exception:
+                pass
+        try:
+            self.env.reset(seed=seed)
+        except Exception:
+            pass
     
     @property
     def observation_space(self):

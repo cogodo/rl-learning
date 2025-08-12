@@ -1,13 +1,36 @@
 # MountainCar-v0 Environment Configuration
-env_name: MountainCar-v0
-max_steps: 200
-reward_threshold: -110 
+environment:
+  env_name: MountainCar-v0
+  max_steps: 200
+  reward_threshold: -110 
 
-wrappers:
-  frame_stack:
-    enabled: false
-    frame_stack: 1
-  normalize_observations:
-    enabled: false
-  normalize_rewards:
-    enabled: false
+  observation_space:
+    type: "Box"
+    shape: [2]
+    low: [-1.2, -0.07]
+    high: [0.6, 0.07]
+
+  action_space:
+    type: "Discrete"
+    n: 3
+
+  wrappers:
+    frame_stack:
+      enabled: false
+      frame_stack: 1
+    normalize_observations:
+      enabled: false
+    normalize_rewards:
+      enabled: false
+
+# Agent overrides for MountainCar-v0
+agent:
+  dqn:
+    training:
+      batch_size: 32  # Smaller batches for MountainCar (harder environment)
+      epsilon: 0.15   # Higher epsilon for exploration in sparse rewards
+  
+  ppo:
+    training:
+      batch_size: 64  # Moderate batch size for MountainCar
+      entropy_coef: 0.05  # Higher entropy for exploration

@@ -1,25 +1,6 @@
 
 ## **Complete RL Framework Implementation Spec**
 
-### **Phase 2: Data Structures**
-
-#### **5. Network Architectures**
-```python
-# src/networks/policy.py
-class PolicyNetwork(nn.Module):
-    def forward(self, obs)
-    def get_action(self, obs, deterministic=False)
-
-# src/networks/value.py
-class ValueNetwork(nn.Module):
-    def forward(self, obs)
-
-# src/networks/q_network.py
-class QNetwork(nn.Module):
-    def forward(self, obs)
-    def get_q_values(self, obs)
-```
-
 ### **Phase 3: Base Classes**
 
 #### **6. Agent Base Class**

@@ -8,7 +8,7 @@ import yaml
 import argparse
 from pathlib import Path
 from runners.experiment import run_experiment
-
+from utils.seeding import set_global_seed
 
 def load_config(config_path):
     """Load configuration from YAML file."""
@@ -27,7 +27,7 @@ def main():
     
     # Load configuration
     config = load_config(args.config)
-    
+    set_global_seed(args.seed)
     if args.sweep:
         # Load sweep configuration
         sweep_config = load_config('configs/Sweep.yaml')

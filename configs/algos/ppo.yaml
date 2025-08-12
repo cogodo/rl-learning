@@ -1,23 +1,56 @@
-#PPO Algorithm Hyperparameters
+# PPO Algorithm Configuration
 algorithm:
-  horizon: 2048
-  adam_stepsize: 3e-4
-  num_epochs: 10
-  minibatch_size: 64
-  gamma: .99
+  type: "PPO"
+  name: "Proximal Policy Optimization"
+
+# Network architecture
+network:
+  policy_type: "PolicyNetwork"
+  value_type: "ValueNetwork"
+  hidden_size: 64
+  learning_rate: 0.0003
+  optimizer: "Adam"
+  weight_decay: 0.0001
+
+# Training parameters
+training:
+  batch_size: 128
+  gamma: 0.99
+  gae_lambda: 0.95
   clip_ratio: 0.2
   value_loss_coef: 0.5
-  entropy_coef: 0.01
+  entropy_coef: 0.02
   max_grad_norm: 0.5
-  lam: 0.95
-
-  #architecture
-  hidden_size: 64
-  num_layers: 2
-
-  #training stability
-  normalize_advantages: true
-  normalize_observations: true
-
-  anneal_lr: true
+  num_epochs: 4
+  num_steps: 4096
+  metrics:
+    window_size: 100
+  
+# Policy optimization
+policy:
+  clip_ratio: 0.2
   target_kl: 0.01
+  entropy_coef: 0.01
+  value_coef: 0.5
+  
+# Value function
+value:
+  loss_coef: 0.5
+  clip_ratio: 0.2
+  
+# Training loop
+training_loop:
+  update_freq: 2048  # Update every 2048 steps
+  num_epochs: 4      # Multiple epochs per update
+  max_grad_norm: 0.5
+  
+# Experience collection
+experience:
+  type: "EpisodeBuffer"
+  max_episode_length: 1000
+  
+# Evaluation
+evaluation:
+  eval_freq: 1000  # Evaluate every 1000 episodes
+  eval_episodes: 10
+  render: false

@@ -1,6 +1,50 @@
-# SARSA Algorithm Hyperparameters
-learning_rate: 0.1
-gamma: 0.99
-epsilon_start: 1.0
-epsilon_end: 0.01
-epsilon_decay: 0.995 
+# SARSA Algorithm Configuration
+algorithm:
+  type: "SARSA"
+  name: "State-Action-Reward-State-Action"
+
+# Network architecture
+network:
+  type: "QNetwork"
+  hidden_size: 64
+  learning_rate: 0.001
+  optimizer: "Adam"
+  weight_decay: 0.0001
+
+# Training parameters
+training:
+  gamma: 0.99
+  epsilon: 1.0
+  epsilon_decay: 0.997
+  epsilon_min: 0.05
+  alpha: 0.1  # Learning rate for SARSA update
+  metrics:
+    window_size: 100
+  
+# Exploration
+exploration:
+  type: "epsilon_greedy"
+  epsilon_start: 1.0
+  epsilon_end: 0.01
+  epsilon_decay: 0.995
+  
+# Training loop
+training_loop:
+  update_freq: 1  # Update every step (on-policy)
+  max_grad_norm: 1.0
+  
+# Experience collection
+experience:
+  type: "EpisodeBuffer"  # SARSA is on-policy, needs episode data
+  max_episode_length: 1000
+  
+# Loss function
+loss:
+  type: "MSE"
+  reduction: "mean"
+  
+# Evaluation
+evaluation:
+  eval_freq: 1000  # Evaluate every 1000 episodes
+  eval_episodes: 10
+  render: false 

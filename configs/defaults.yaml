@@ -1,20 +1,9 @@
-# Meta-config: defines what algos, what envs, and overrides
-algorithms:
-  - dqn
-  - sarsa
-  # Add more algorithms as needed
-
-environments:
-  - CartPole-v1
-  - MountainCar-v0
-  # Add more environments as needed
-
-# Global overrides
+# Global defaults (algorithm-agnostic)
 global:
   seed: 41
   max_episodes: 1000
   log_interval: 10
-  
+
 # Experiment settings
 experiment:
   num_runs: 5
@@ -58,20 +47,29 @@ figures:
     dpi: 300
     save_path: "results/figures/"
 
-# global env settings
+# Environment defaults (applied before env-specific overrides)
 environment: 
   render_mode: null
   auto_reset: true
 
   #wrapper config defaults
   wrappers:
+    order: ["normalize_observations", "frame_stack", "normalize_rewards"]
     normalize_observations:
-      enabled: false
-    normalize_rewards: 
-      enabled: false
+      enabled: true
+      epsilon: 1e-8
+      momentum: 0.999
+      reset_stats_on_episode: false
+    normalize_rewards:
+      enabled: true
     frame_stack:
       enabled: false
       frame_stack: 1
+
   
-  #eval defaults
+# Evaluation defaults
+evaluation:
   eval_episodes: 10
+
+experiment:
+  num_runs: 10
