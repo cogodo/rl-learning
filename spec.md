@@ -3,18 +3,6 @@
 
 ### **Phase 3: Base Classes**
 
-#### **6. Agent Base Class**
-```python
-# src/agents/base.py
-class BaseAgent:
-    def __init__(self, env, config)
-    def select_action(self, obs, training=True)
-    def update(self, batch)
-    def save(self, path)
-    def load(self, path)
-    def reset(self)
-```
-
 #### **7. Training Loop**
 ```python
 # src/runners/trainer.py
