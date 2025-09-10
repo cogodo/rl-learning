@@ -1,19 +1,6 @@
 
 ## **Complete RL Framework Implementation Spec**
 
-### **Phase 3: Base Classes**
-
-#### **7. Training Loop**
-```python
-# src/runners/trainer.py
-class Trainer:
-    def __init__(self, agent, env, config)
-    def train_episode(self)
-    def evaluate(self, num_episodes)
-    def train(self, num_episodes)
-    def save_checkpoint(self, path)
-```
-
 ### **Phase 4: Utilities**
 
 #### **8. Visualization**
@@ -24,17 +11,6 @@ class Plotter:
     def plot_algorithm_comparison(self, results)
     def plot_hyperparameter_sensitivity(self, results)
     def save_plots(self, path)
-```
-
-#### **9. Experiment Management**
-```python
-# src/runners/experiment.py
-class ExperimentRunner:
-    def __init__(self, config)
-    def run_single_experiment(self)
-    def run_multiple_runs(self)
-    def run_hyperparameter_sweep(self)
-    def save_results(self, path)
 ```
 
 ### **Phase 5: Testing Infrastructure**
