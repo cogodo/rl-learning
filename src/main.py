@@ -7,8 +7,8 @@ Reads configuration and orchestrates experiment runs.
 import yaml
 import argparse
 from pathlib import Path
-from runners.experiment import run_experiment
-from utils.seeding import set_global_seed
+from .runners.experiment import run_experiment
+from .utils.seeding import set_global_seed
 
 def load_config(config_path):
     """Load configuration from YAML file."""
@@ -22,7 +22,11 @@ def main():
                        help='Path to configuration file')
     parser.add_argument('--sweep', action='store_true',
                        help='Run parameter sweep')
-    
+    parser.add_argument('--seed', type=int, default=41,
+                       help='Seed for random number generator')
+    parser.add_argument('--eval_only', action='store_true',
+                       help='Run evaluation only')
+
     args = parser.parse_args()
     
     # Load configuration

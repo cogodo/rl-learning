@@ -12,11 +12,11 @@ class OnPolicyTrainer(Trainer):
 
     def evaluate(self, num_episodes: int) -> Dict[str, float]:
         """Run policy in eval mode and aggregate episode metrics."""
-        raise NotImplementedError
+        return super().evaluate(num_episodes)
 
     def train(self, num_episodes: int, eval_every: Optional[int] = None, eval_episodes: int = 5, checkpoint_every: Optional[int] = None) -> None:
         """Run on-policy training loop with optional eval/checkpoints."""
-        raise NotImplementedError
+        return super().train(num_episodes, eval_every=eval_every, eval_episodes=eval_episodes, checkpoint_every=checkpoint_every)
 
     def save_checkpoint(self, path, metadata: Optional[Dict[str, Any]] = None) -> None:
         """Save agent weights and trainer state for on-policy training."""

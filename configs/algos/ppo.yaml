@@ -52,5 +52,5 @@ experience:
 # Evaluation
 evaluation:
   eval_freq: 1000  # Evaluate every 1000 episodes
-  eval_episodes: 10
+  episodes: 10
   render: false

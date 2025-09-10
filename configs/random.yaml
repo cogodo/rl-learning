@@ -1,0 +1,10 @@
+environment:
+  env_name: "CartPole-v1"
+
+algorithm:
+  type: "RANDOM"
+  name: "Random actions"
+
+evaluation:
+  eval_only: true
+  episodes: 2
